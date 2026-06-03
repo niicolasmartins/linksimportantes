@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nicolas Martins</title>
+  <meta name="description" content="Especialista em tráfego pago exclusivamente para empresas de móveis planejados." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #1a1a1a;
+      --card-primary:#2a2a2a;
+      --card-sec:    #222222;
+      --card-sec-hov:#2a2a2a;
+      --border:      #3a3a3a;
+      --accent:      #b07d46;
+      --text:        #f8eae1;
+      --muted:       #888888;
+      --dim:         #555555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ─────────────────────────────
+       ENTRADA — fade-in de baixo p/ cima
+    ───────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ─────────────────────────────
+       HERO
+    ───────────────────────────── */
+    .hero {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 68px 24px 56px;
+      /* vinheta grafite — dá volume sem cor */
+      background: radial-gradient(ellipse 85% 65% at 50% 28%, #242424 0%, #1a1a1a 72%);
+    }
+
+    /* brilho terracota discreto atrás do nome */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      width: 520px;
+      height: 520px;
+      transform: translateX(-50%);
+      background: radial-gradient(
+        circle,
+        rgba(176, 125, 70, 0.12) 0%,
+        rgba(176, 125, 70, 0.05) 32%,
+        transparent 64%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* grão sutil — tira o aspecto chapado (ajuste a opacidade se vier forte) */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero__tag {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 26px;
+    }
+
+    .hero__avatar {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1.5px solid var(--accent);
+      background: #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: 0 0 32px rgba(176, 125, 70, 0.18);
+    }
+    .hero__avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .hero__avatar-placeholder {
+      font-size: 0.55rem;
+      color: var(--dim);
+      text-align: center;
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+    }
+
+    .hero__name {
+      font-family: 'Lato', sans-serif;
+      font-size: clamp(2.8rem, 12vw, 4rem);
+      font-weight: 900;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .hero__rule {
+      width: 36px;
+      height: 1.5px;
+      background: var(--accent);
+      margin: 0 auto 20px;
+    }
+
+    .hero__headline {
+      font-family: 'Lato', sans-serif;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 0.01em;
+      max-width: 320px;
+      line-height: 1.55;
+    }
+    .hero__headline em { color: var(--accent); font-style: normal; }
+    .hero__headline span { color: var(--muted); font-weight: 400; }
+
+    /* ─────────────────────────────
+       DIVISOR DE TRANSIÇÃO
+    ───────────────────────────── */
+    .section-divider {
+      width: 100%;
+      max-width: 420px;
+      height: 1px;
+      margin: 0 auto;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(176, 125, 70, 0.35),
+        transparent
+      );
+    }
+
+    /* ─────────────────────────────
+       CARDS
+    ───────────────────────────── */
+    .content {
+      width: 100%;
+      max-width: 420px;
+      flex: 1;
+      padding: 44px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--card-sec);
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition:
+        background   0.25s ease,
+        border-color 0.25s ease,
+        transform    0.25s ease,
+        box-shadow   0.25s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      background: var(--card-sec-hov);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+    }
+
+    /* CTA principal — elemento dominante */
+    .card--primary {
+      background: var(--card-primary);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      padding: 26px 24px;
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.45),
+        0 0 28px rgba(176, 125, 70, 0.07);
+    }
+    .card--primary:hover {
+      background: #2f2f2f;
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(176, 125, 70, 0.18),
+        0 0 40px rgba(176, 125, 70, 0.14);
+    }
+    .card--primary .card__title { font-size: 0.92rem; }
+    .card--primary .card__sub   { font-size: 0.7rem; }
+    .card--primary .card__icon  { width: 44px; height: 44px; }
+    .card--primary .card__icon svg { width: 23px; height: 23px; }
+
+    .card__icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .card__icon svg { width: 20px; height: 20px; }
+
+    .card__body { flex: 1; }
+
+    .card__title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      margin-bottom: 3px;
+    }
+    .card__sub {
+      font-size: 0.67rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      font-weight: 400;
+    }
+
+    .card__arrow {
+      color: var(--dim);
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: color 0.25s ease, transform 0.25s ease;
+    }
+    .card:hover .card__arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* ─────────────────────────────
+       FOOTER — fixo na base
+    ───────────────────────────── */
+    .footer {
+      padding: 28px 20px 36px;
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Acessibilidade — respeita quem desativa animações */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <p class="hero__tag reveal" style="animation-delay:0.1s">Tráfego Pago · Móveis Planejados</p>
+
+    <div class="hero__avatar reveal" style="animation-delay:0.18s">
+      <img src="foto.jpg" alt="Nicolas Martins" width="92" height="92" />
+    </div>
+
+    <h1 class="hero__name reveal" style="animation-delay:0.26s">Nicolas Martins</h1>
+    <div class="hero__rule reveal" style="animation-delay:0.34s"></div>
+    <p class="hero__headline reveal" style="animation-delay:0.42s">
+      Mais <em>projetos</em> fechados.<br />
+      <span>Sem depender de indicação.</span>
+    </p>
+  </header>
+
+  <div class="section-divider reveal" style="animation-delay:0.5s"></div>
+
+  <!-- ── CARDS ── -->
+  <main class="content">
+
+    <!-- CTA principal -->
+    <a href="https://nicolasmartins.yayforms.link/d1rAJya" target="_blank" rel="noopener" class="card card--primary reveal" style="animation-delay:0.58s">
+      <div class="card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+      </div>
+      <div class="card__body">
+        <p class="card__title">Quero mais projetos fechados</p>
+        <p class="card__sub">Preencha o formulário — leva menos de 2 minutos</p>
+      </div>
+      <span class="card__arrow">→</span>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/nicolasperformance/" target="_blank" rel="noopener" class="card reveal" style="animation-delay:0.68s">
+      <div class="card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4.5"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="card__body">
+        <p class="card__title">Instagram</p>
+        <p class="card__sub">@nicolasperformance</p>
+      </div>
+      <span class="card__arrow">→</span>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5516991708415?text=Ol%C3%A1%2C%20vim%20do%20Instagram%20e%20quero%20saber%20mais%20sobre%20a%20assessoria%20de%20tr%C3%A1fego." target="_blank" rel="noopener" class="card reveal" style="animation-delay:0.78s">
+      <div class="card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+      </div>
+      <div class="card__body">
+        <p class="card__title">WhatsApp</p>
+        <p class="card__sub">Entre em contato</p>
+      </div>
+      <span class="card__arrow">→</span>
+    </a>
+
+  </main>
+
+  <footer class="footer reveal" style="animation-delay:0.88s">© 2026 Nicolas Martins · Vernost</footer>
+
+</body>
+</html>
