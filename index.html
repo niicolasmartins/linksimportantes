@@ -168,6 +168,7 @@
       font-family: 'Lato', sans-serif;
       font-size: clamp(1.2rem, 5vw, 1.5rem);
       font-weight: 700;
+      text-transform: uppercase;
       color: var(--text);
       text-align: center;
       letter-spacing: 0.01em;
@@ -175,7 +176,7 @@
       line-height: 1.55;
     }
     .hero__headline em { color: var(--accent); font-style: normal; }
-    .hero__headline span { color: var(--muted); font-weight: 400; }
+    .hero__headline span { color: var(--muted); font-weight: 400; text-transform: none; }
 
     /* ─────────────────────────────
        DIVISOR DE TRANSIÇÃO
@@ -208,51 +209,47 @@
     }
 
     .card {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 16px;
+      min-height: 82px;
       background: var(--card-sec);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--accent);
       padding: 18px 20px;
       text-decoration: none;
       color: var(--text);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       transition:
         background   0.25s ease,
-        border-color 0.25s ease,
         transform    0.25s ease,
         box-shadow   0.25s ease;
       cursor: pointer;
     }
     .card:hover {
       background: var(--card-sec-hov);
-      border-color: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(176, 125, 70, 0.2);
     }
 
-    /* CTA principal — elemento dominante */
-    .card--primary {
-      background: var(--card-primary);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      padding: 26px 24px;
-      box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.45),
-        0 0 28px rgba(176, 125, 70, 0.07);
+    /* anel pulsante — chama atenção pro clique, some no hover e no reduced-motion */
+    @keyframes cardPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(176, 125, 70, 0.45); }
+      40%      { box-shadow: 0 0 0 9px rgba(176, 125, 70, 0); }
     }
-    .card--primary:hover {
-      background: #2f2f2f;
-      transform: translateY(-2px);
-      box-shadow:
-        0 12px 36px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(176, 125, 70, 0.18),
-        0 0 40px rgba(176, 125, 70, 0.14);
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: 0 0 0 0 rgba(176, 125, 70, 0.45);
+      animation: cardPulse 2.6s ease-out infinite;
+      animation-delay: 1.4s;
     }
-    .card--primary .card__title { font-size: 0.92rem; }
-    .card--primary .card__sub   { font-size: 0.7rem; }
-    .card--primary .card__icon  { width: 44px; height: 44px; }
-    .card--primary .card__icon svg { width: 23px; height: 23px; }
+    .card:hover::after {
+      animation: none;
+      box-shadow: none;
+    }
 
     .card__icon {
       width: 38px;
@@ -270,8 +267,9 @@
     .card__title {
       font-size: 0.8rem;
       font-weight: 500;
+      text-transform: uppercase;
       color: var(--text);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
       margin-bottom: 3px;
     }
     .card__sub {
@@ -329,8 +327,8 @@
     <h1 class="hero__name reveal" style="animation-delay:0.26s">Nicolas Martins</h1>
     <div class="hero__rule reveal" style="animation-delay:0.34s"></div>
     <p class="hero__headline reveal" style="animation-delay:0.42s">
-      Venda <em>30%+</em> Móveis Planejados<br />
-      <span>Pare de depender de indicação</span>
+      Venda <em>30%+</em> Projetos de Planejados<br />
+      <span>Pare de depender de indicação.</span>
     </p>
   </header>
 
@@ -340,7 +338,7 @@
   <main class="content">
 
     <!-- CTA principal -->
-    <a href="https://chronosdock.com/form/nicolasmartins" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','InitiateCheckout')" class="card card--primary reveal" style="animation-delay:0.58s">
+    <a href="https://chronosdock.com/form/nicolasmartins" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','InitiateCheckout')" class="card reveal" style="animation-delay:0.58s">
       <div class="card__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -351,8 +349,8 @@
         </svg>
       </div>
       <div class="card__body">
-        <p class="card__title">Quero mais projetos fechados</p>
-        <p class="card__sub">Preencha o formulário — leva menos de 2 minutos</p>
+        <p class="card__title">Quero acelerar minhas vendas</p>
+        <p class="card__sub">Preencha o formulário, leva menos de 2 minutos</p>
       </div>
       <span class="card__arrow">→</span>
     </a>
@@ -365,8 +363,8 @@
         </svg>
       </div>
       <div class="card__body">
-        <p class="card__title">WhatsApp</p>
-        <p class="card__sub">Entre em contato</p>
+        <p class="card__title">Entre em contato</p>
+        <p class="card__sub">Tire suas dúvidas e entenda como funciona</p>
       </div>
       <span class="card__arrow">→</span>
     </a>
