@@ -302,6 +302,13 @@
       text-align: center;
       text-transform: uppercase;
     }
+    .footer a {
+      color: var(--dim);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s ease;
+    }
+    .footer a:hover { color: var(--accent); }
 
     /* Acessibilidade — respeita quem desativa animações */
     @media (prefers-reduced-motion: reduce) {
@@ -371,7 +378,7 @@
 
   </main>
 
-  <footer class="footer reveal" style="animation-delay:0.78s">© 2026 Nicolas Martins · Vernost</footer>
+  <footer class="footer reveal" style="animation-delay:0.78s">© 2026 Nicolas Martins · Vernost<br /><a href="privacidade.html">Política de Privacidade</a></footer>
 
 </body>
 </html>
